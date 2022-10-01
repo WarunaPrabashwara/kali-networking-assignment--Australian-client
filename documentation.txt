@@ -1,0 +1,358 @@
+Task 4 thama karanne 
+
+
+some keywords found 
+
+
+https://www.tecmint.com/nmap-network-security-scanner-in-kali-linux/
+nmap -sL 192.168.8.0/24     [ meka network eke ip range ekata hadaaganna wenawa ]
+nmap -sV 192.168.8.167  [ meken pluwan port scan karaganna ]
+nmap -sC 192.168.8.167 -p 21        [ find anonymous Find Anonymous FTP Logins on Hosts ]
+
+
+
+mulin mehema karamu 
+api thawa vm ekak daamu cent os . 
+eeke ftp server installed da balala , nAttham install karamu
+
+mulin cent os wala ftp installed da balamu
+rpm -q ftp 
+rpm -qa | grep ftp
+gahala blnn
+
+
+
+cent os eke
+yum  install vsftpd
+systemctl start vsftpd
+systemctl status vsftpd
+
+hari eeka wAda 
+dan balamu meka gana deatails
+
+vsftpd -v
+gahwama verison eka enwa 
+
+dan 
+nmap -n 192.168.8.166 [ adaala ip eka ]
+gahala baluwam 
+kali eken cent os eka penwanne naha 
+but cent os eke eeka penwa  nwa 
+so port open karanna wenwa 
+
+firewall-cmd --zone=public --add-port=21/tcp --permanent
+firewall-cmd --reload
+
+dan kali eken scan kalaama scan list eke penwanwa 
+
+ nmap  -sV -O   192.168.8.166
+ meken version ekath enwa 
+
+nmap  -sV -O   192.168.8.166 |grep ftp
+
+
+ip a |  grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}"
+
+meeken ena local host eke eka wAdak naha 
+anith eewage subnet walin geema gahanna tyenne
+
+ip a |  grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}"
+meeka use karana eka thama apita agata guna 
+palawein cheedaya ignore karala 
+dewAni eka " " walin split karala array eke 1st element eka ganna 
+
+eeken adala ip ranges for loop ekakata aran pahala ekata gaanta dAmmama wAde hari 
+
+ nmap -sn 192.168.8.144/24 |  grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}"
+meke mula line eka ayin karala anithwagen 
+eeken ip/hostname  tika aran eewa wenama wenama filter karanna pluwan 
+
+nmap  -sV -O   192.168.8.166 |grep ftp
+
+============
+ethkota pai use karana command tika thama meewa
+
+ip a |  grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}"        meke palaweni line eka nAthuwa anithwa aran eewage " " magin split karala dewani eka ganna 
+iilagata 
+nmap -sn 192.168.8.144/24 |  grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}"   meke ip eka lassanata obbawala ganna deatails 
+iilagata uda eke output eke palaweni eka nathuwa anith lines split(" ") kaala 4 element eka ganna . iilagata  
+nmap  -sV -O   192.168.8.166 |grep ftp  meekata ip dadaa ganna 
+
+
+
+
+note=======
+  File "/usr/lib/python2.7/subprocess.py", line 219, in check_output
+    raise CalledProcessError(retcode, cmd, output=output)
+subprocess.CalledProcessError: Command ' nmap  -sV -O 192.168.8.2 |grep ftp ' returned non-zero exit status                  1
+
+me wage error ekak aawama karanna oni mehema deyak 
+
+strng2 = " nmap  -sV -O "+ var2 + " |grep ftp  ; exit 0  "
+out3 =  subprocess.check_output( strng2  , stderr=subprocess.STDOUT,  shell=True )
+
+string eke agata exit 0 dala tyenwa peenwanee 
+stderr=subprocess.STDOUT mekath useful wenw hari  . me deken ekak hari nAttham error eka gahanwa 
+
+mehema dammama oni output jathiyak text widihata enwa 
+so exit wenne naha . 
+
+
+anthima ekata http service ekak install karanna oni 
+mn hithanne apache 
+
+yum install -y httpd
+systemctl start httpd
+systemctl enable httpd
+
+port open karanna 
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --reload
+
+nmap  -sV -O 192.168.8.144 |grep http
+kiyana eka thama uda eewage wenas karanna oni
+
+
+
+
+
+
+meke duwa kiyana eka baluwama mama dAkka duwa install karanna pluwan kiyala seen ekak 
+so mama eeka install karanna baluwe apache walata
+
+apache install kalla cent os eke 
+cd /var/www/html
+yum install -y git
+git clone https://github.com/ethicalhack3r/DVWA
+chmod -R 777 DVWA
+
+browserd below link
+http://192.168.8.166/DVWA/
+
+cp  DVWA/config/config.inc.php.dist DVWA/config/config.inc.php
+
+
+vi  DVWA/config/config.inc.php
+
+
+Changed db_user and db_password
+...
+$_DVWA = array();
+$_DVWA[ 'db_server' ]   = '192.168.8.132';
+$_DVWA[ 'db_database' ] = 'dvwa';
+$_DVWA[ 'db_user' ]     = 'root;
+$_DVWA[ 'db_password' ] = 'root';
+$_DVWA[ 'db_port'] = '3306';
+...
+
+mee kAllata mama mage windows eke mysql server eka run karawala eeka dunne 
+
+
+
+
+https://nooblinux.com/how-to-install-dvwa/
+
+me site eke hAtiyata karagena yanne 
+
+mama hithanne php install karanna wwei wage iilagata
+
+yum install php
+
+systemctl restart httpd
+
+vi info.php
+
+<?php phpinfo(); ?>
+
+add above and save
+
+mow browser
+http://192.168.8.166/info.php
+
+if you need you can also remove this file . it is a test to see if php installed
+[		https://medium.datadriveninvestor.com/setup-install-dvwa-into-your-linux-distribution-d76dc3b80357   	 link ]
+
+
+yum install php5-mysql
+
+
+yum  install php-gd
+
+
+keinma 
+vi DVWA/config/config.inc.php.dist
+file eka ma chane karamu 
+copu ekak ne kalin site eke edit kale 
+eka oni nah
+
+
+
+vi /etc/php.ini
+[site eke thibba place eke newe mage eka thibbe]
+
+
+allow_url_fopen = On
+allow_url_include = On
+
+dekama on karanna 
+
+
+systemctl restart httpd
+
+
+dan 
+http://192.168.8.166/DVWA/
+ink eka ta browser eken gihilla balanna 
+
+
+case ekak 
+mn hithanne port eka open naha windowsn mysql server eke 
+so api me server ekatama mysql install karamuy
+
+
+
+yum install mysql
+
+me widihata mysql install karanna baha 
+curl -sSLO https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+sudo rpm -ivh mysql80-community-release-el7-5.noarch.rpm			meke nama wenas karanna accodingly
+sudo yum install mysql-server
+
+sudo systemctl start mysqld
+sudo systemctl enable mysqld
+sudo grep 'temporary password' /var/log/mysqld.log		[ meken ena termporary password eka iilaga ekata oni wenwa ]
+sudo mysql_secure_installation
+
+root
+root1@AAAa
+
+
+vi DVWA/config/config.inc.php.dist 
+eke db server eka 
+
+'127.0.0.1'
+root
+root1@AAAa
+damu 
+
+systemctl restart httpd
+
+hari giye naha 
+mn hithanne api file ekak haduwane 
+dist ayin karala 
+eekai aula
+
+vi DVWA/config/config.inc.php
+
+
+eke adaala changes karala 
+systemctl restart httpd
+
+
+website eke 
+Please check the config file.
+Database Error #2003: Can't connect to MySQL server on '127.0.0.1' (13).
+wage enwa 
+
+so 
+sudo mysql -u root -p
+
+use mysql;
+set password for 'root'@'localhost' = password('root1@AAAa');
+hariyanne naha 
+so uninstall karanla aya install karamu
+
+
+sudo yum remove mysql-server
+
+sudo rpm -ivh mysql80-community-release-el7-5.noarch.rpm			meke nama wenas karanna accodingly
+sudo yum install mysql-server
+
+sudo mysql -u root -p
+
+sudo grep 'temporary password' /var/log/mysqld.log		[ meken ena termporary password eka iilaga ekata oni wenwa ]
+sudo systemctl start mysqld
+sudo systemctl enable mysqld
+
+sudo mysql -u root -p
+
+ me secure installtion eka nm karanna epa 		sudo mysql_secure_installation
+wenama tyenwa reset password kiyala 
+eka karanna
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass';
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'root1@AAAa';
+
+
+dan pc eka reboot kalaa 
+eeka hodaine 
+aulak thyenwanm makabAwila yanna
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root1@AAAa';
+kiyana ekata passe
+FLUSH PRIVILEGES;
+gahanna
+
+
+meka hariyanne nathi nisa new user kenek hadala uta table ekak hadala ee data damu ara file walata
+
+CREATE DATABASE dvwadb;
+CREATE USER 'dvwausrrr'@'localhost' IDENTIFIED BY 'dvwar@123A' ;
+GRANT ALL PRIVILEGES ON dvwadb.* TO 'dvwausrrr'@'localhost'  ;
+flush privileges;
+cd /var/www/html
+
+vi DVWA/config/config.inc.php
+vi DVWA/config/config.inc.php.dist
+
+reboot ekak ma dAmma 
+
+
+
+
+
+ita passe erro eka wena s 
+Could not connect to the database service.
+Please check the config file.
+Database Error #2003: Can't connect to MySQL server on '127.0.0.1' (13).
+so mama hithanne ip eka localhost eka kiyala dala balamu
+mokada bind wenne nadda danne naha ne me ip eka localhost ekata
+
+[ bind wenne nathi seen ekk thama tyuenne 
+so anka washayen ma tyyaganna oninm 
+vi /etc/my.cnf
+https://bitcoden.com/answers/error-2003-hy000-cant-connect-to-mysql-server-on-127001-111 
+meka kiyawapan
+]
+
+
+localhost karala 
+reboot ma kalaa
+
+
+e para
+Could not connect to the database service.
+Please check the config file.
+Database Error #2059: Authentication plugin 'caching_sha2_password' cannot be loaded: /usr/lib64/mysql/plugin/caching_sha2_password.so: cannot open shared object file: No such file or directory.
+google karaa
+
+ALTER USER 'dvwausrrr'@'localhost'  IDENTIFIED WITH mysql_native_password BY 'dvwar@123A';
+
+
+reboot kala
+
+
+ammo hari bn 
+
+
+
+
+
+
+eka hari 
+
+mee idle workers kiyanne 
+me welawe pudgalayo kiya k sserver eka use karanwa da kiyala da danne naha ne 
+session handle wenne ee anuwane 
+idle workers=256-(requests currently being processed)
+mn hithanne mama hari 
+
